@@ -53,6 +53,25 @@ const combCharsMap = [
   [[0x0644, 0x0627], 0xFEFB, null, null, 0xFEFC], /* LAM_ALEF */
 ]
 
+export const formCodeToCharCodeMap = (function() {
+  let map = {};
+  charsMap.forEach((charsMap) => {
+    let codePoint = charsMap[0];
+    charsMap.forEach((formCode, i) => { if (formCode && i > 0) map[formCode] = [codePoint]; })
+  });
+
+  combCharsMap.forEach((charsMap) => {
+    let codePoint = charsMap[0];
+    charsMap.forEach((formCode, i) => { if (formCode && i > 0) map[formCode] = codePoint; })
+  });
+
+  return map;
+})();
+
+export function getCodePoints(transformCode) {
+  return formCodeToCharCodeMap[transformCode];
+}
+
 const transChars = [
   0x0610, /* ARABIC SIGN SALLALLAHOU ALAYHE WASSALLAM */
   0x0612, /* ARABIC SIGN ALAYHE ASSALLAM */
